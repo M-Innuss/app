@@ -25,11 +25,11 @@ func init() {
 
     revel.Filters = []revel.Filter{
         revel.PanicFilter,             // Recover from panics and display an error page instead.
-        ... snipped ...
+      
         revel.CompressFilter,          // Compress the result.
         revel.ActionInvoker,           // Invoke the action.
     }
     
     revel.OnAppStart(InitDB)
-    ...
+   
 }
