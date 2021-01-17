@@ -6,54 +6,54 @@ import (
 )
 
 const (
-	// PersonTableName is the name of the table for the person model
-	PersonTableName = "person"
-	// PersonFirstNameCol is the column name of the model's first name
-	PersonFirstNameCol = "first_name"
-	// PersonLastNameCol is the column name of the model's last name
-	PersonLastNameCol = "last_name"
-	// PersonAgeCol is the column name of the model's age
-	PersonAgeCol = "age"
+	// UserDBTableName is the name of the table for the UserDB model
+	UserDBTableName = "UserDB"
+	// UserDBFirstNameCol is the column name of the model's first name
+	UserDBFirstNameCol = "first_name"
+	// UserDBLastNameCol is the column name of the model's last name
+	UserDBLastNameCol = "last_name"
+	// UserDBAgeCol is the column name of the model's age
+	UserDBAgeCol = "age"
 )
 
-// Person is the database model for a person
-type Person struct {
+// UserDB is the database model for a UserDB
+type UserDB struct {
 	FirstName string
 	LastName  string
 	Age       uint
 }
 
-// CreatePersonTable uses db to create a new table for Person models, and returns the result
-func CreatePersonTable(db *sql.DB) (sql.Result, error) {
+// CreateUserDBTable uses db to create a new table for UserDB models, and returns the result
+func CreateUserDBTable(db *sql.DB) (sql.Result, error) {
 	return db.Exec(
 		fmt.Sprintf("CREATE TABLE %s (%s varchar(255), %s varchar(255), %s int)",
-			PersonTableName,
-			PersonFirstNameCol,
-			PersonLastNameCol,
-			PersonAgeCol,
+			UserDBTableName,
+			UserDBFirstNameCol,
+			UserDBLastNameCol,
+			UserDBAgeCol,
 		),
 	)
 }
 
-// InsertPerson inserts person into db
-func InsertPerson(db *sql.DB, person Person) (sql.Result, error) {
+// InsertUserDB inserts UserDB into db
+func InsertUserDB(db *sql.DB, UserDB UserDB) (sql.Result, error) {
 	return db.Exec(
-		fmt.Sprintf("INSERT INTO %s VALUES(?, ?, ?)", PersonTableName),
-		person.FirstName,
-		person.LastName,
-		person.Age,
+		fmt.Sprintf("INSERT INTO %s VALUES(?, ?, ?)", UserDBTableName),
+		UserDB.FirstName,
+		UserDB.LastName,
+		UserDB.Age,
 	)
 }
 
-// SelectPerson selects a person with the given first & last names and age. On success, writes the result into result and on failure, returns a non-nil error and makes no modifications to result
-func SelectPerson(db *sql.DB, firstName, lastName string, age uint, result *Person) error {
+// SelectUserDB selects a UserDB with the given first & last names and age. On success, writes the result into result and on failure, returns a non-nil error and makes no modifications to result
+func SelectUserDB(db *sql.DB, firstName, lastName string, age uint, result *UserDB) error {
 	row := db.QueryRow(
 		fmt.Sprintf(
 			"SELECT * FROM %s WHERE %s=? AND %s=? AND %s=?",
-			PersonTableName,
-			PersonFirstNameCol,
-			PersonLastNameCol,
-			PersonAgeCol,
+			UserDBTableName,
+			UserDBFirstNameCol,
+			UserDBLastNameCol,
+			UserDBAgeCol,
 		),
 		firstName,
 		lastName,
@@ -70,22 +70,22 @@ func SelectPerson(db *sql.DB, firstName, lastName string, age uint, result *Pers
 	return nil
 }
 
-// UpdatePerson updates the person with the given first & last names and age with newPerson. Returns a non-nil error if the update failed, and nil if the update succeeded
-func UpdatePerson(db *sql.DB, firstName, lastName string, age uint, newPerson Person) error {
+// UpdateUserDB updates the UserDB with the given first & last names and age with newUserDB. Returns a non-nil error if the update failed, and nil if the update succeeded
+func UpdateUserDB(db *sql.DB, firstName, lastName string, age uint, newUserDB UserDB) error {
 	_, err := db.Exec(
 		fmt.Sprintf(
 			"UPDATE %s SET %s=?,%s=?,%s=? WHERE %s=? AND %s=? AND %s=?",
-			PersonTableName,
-			PersonFirstNameCol,
-			PersonLastNameCol,
-			PersonAgeCol,
-			PersonFirstNameCol,
-			PersonLastNameCol,
-			PersonAgeCol,
+			UserDBTableName,
+			UserDBFirstNameCol,
+			UserDBLastNameCol,
+			UserDBAgeCol,
+			UserDBFirstNameCol,
+			UserDBLastNameCol,
+			UserDBAgeCol,
 		),
-		newPerson.FirstName,
-		newPerson.LastName,
-		newPerson.Age,
+		newUserDB.FirstName,
+		newUserDB.LastName,
+		newUserDB.Age,
 		firstName,
 		lastName,
 		age,
@@ -93,15 +93,15 @@ func UpdatePerson(db *sql.DB, firstName, lastName string, age uint, newPerson Pe
 	return err
 }
 
-// DeletePerson deletes the person with the given first & last names and age. Returns a non-nil error if the delete failed, and nil if the delete succeeded
-func DeletePerson(db *sql.DB, firstName, lastName string, age uint) error {
+// DeleteUserDB deletes the UserDB with the given first & last names and age. Returns a non-nil error if the delete failed, and nil if the delete succeeded
+func DeleteUserDB(db *sql.DB, firstName, lastName string, age uint) error {
 	_, err := db.Exec(
 		fmt.Sprintf(
 			"DELETE FROM %s WHERE %s=? AND %s=? AND %s=?",
-			PersonTableName,
-			PersonFirstNameCol,
-			PersonLastNameCol,
-			PersonAgeCol,
+			UserDBTableName,
+			UserDBFirstNameCol,
+			UserDBLastNameCol,
+			UserDBAgeCol,
 		),
 		firstName,
 		lastName,
